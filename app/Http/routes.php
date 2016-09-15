@@ -29,3 +29,20 @@ $app->delete('/clients',
 	]
 );
 
+$app->get('/users',
+	[
+		'uses'				=> 'UserController@index'
+	]
+);
+
+$app->post('/users',
+	[
+		'uses'				=> 'UserController@post'
+	]
+);
+
+$app->delete('/users',
+	[
+		'uses'				=> 'UserController@delete'
+	]
+);

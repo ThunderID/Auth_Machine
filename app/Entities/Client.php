@@ -174,9 +174,9 @@ class Client extends BaseModel
 	}
 
 	/**
-	 * scope to get condition where grant name
+	 * scope to get condition where grant scope
 	 *
-	 * @param string or array of grant name
+	 * @param string or array of grant scope
 	 **/
 	public function scopeGrantScopes($query, $variable)
 	{

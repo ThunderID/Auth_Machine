@@ -35,7 +35,7 @@ class UserObserver
 	{
 		$email 				= Model::notid($id)->email($email)->first();
 
-		if($email->count())
+		if($email)
 		{
 			$model['errors'] = ['Email harus unique!'];
 

@@ -8,14 +8,14 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
-use App\Entities\Client;
+use App\Entities\User;
 
 /**
- * Client resource representation.
+ * User resource representation.
  *
- * @Resource("Clients", uri="/clients")
+ * @Resource("Users", uri="/users")
  */
-class ClientController extends Controller
+class UserController extends Controller
 {
 	public function __construct(Request $request)
 	{
@@ -23,18 +23,18 @@ class ClientController extends Controller
 	}
 
 	/**
-	 * Show all Clients
+	 * Show all Users
 	 *
 	 * @Get("/")
 	 * @Versions({"v1"})
 	 * @Transaction({
-	 *      @Request({"search":{"_id":"string","type":"mobile|web","version":"string","code":"string","grant":"string","scopes":"string"},"sort":{"newest":"asc|desc","version":"desc|asc","type":"desc|asc", "company":"desc|asc"}, "take":"integer", "skip":"integer"}),
-	 *      @Response(200, body={"status": "success", "data": {"data":{"_id":"string","app":{"type":"string","version":"string","name":"string"},"company":{"code":"string","name":"string"},"key":"string","secret":"string","grants":{"name":"string","scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}},"count":"integer"} })
+	 *      @Request({"search":{"_id":"string","type":"mobile|web","version":"string","code":"string","client":"string","scopes":"string"},"sort":{"newest":"asc|desc","version":"desc|asc","type":"desc|asc", "company":"desc|asc","name":"desc|asc"}, "take":"integer", "skip":"integer"}),
+	 *      @Response(200, body={"status": "success", "data": {"data":{"_id":"string","email":"string","user":{"name":"string"},"accesses":{"client_id":"string","app":{"type":"web|mobile","name":"string","version":"string"},"company":{"code":"string","name":"string"},"scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}},"count":"integer"} })
 	 * })
 	 */
 	public function index()
 	{
-		$result						= new Client;
+		$result						= new User;
 
 		if(Input::has('search'))
 		{
@@ -47,6 +47,9 @@ class ClientController extends Controller
 					case '_id':
 						$result		= $result->id($value);
 						break;
+					case 'email':
+						$result		= $result->email($value);
+						break;
 					case 'type':
 						$result		= $result->apptype($value);
 						break;
@@ -56,11 +59,11 @@ class ClientController extends Controller
 					case 'code':
 						$result		= $result->companycode($value);
 						break;
-					case 'grant':
-						$result		= $result->grantname($value);
+					case 'client':
+						$result		= $result->clientid($value);
 						break;
 					case 'scopes':
-						$result		= $result->grantscopes($value);
+						$result		= $result->accessscopes($value);
 						break;
 					default:
 						# code...
@@ -81,17 +84,20 @@ class ClientController extends Controller
 				}
 				switch (strtolower($key)) 
 				{
+					case 'name':
+						$result		= $result->orderby('user.name', $value);
+						break;
 					case 'newest':
 						$result		= $result->orderby('created_at', $value);
 						break;
 					case 'version':
-						$result		= $result->orderby('app.version', $value);
+						$result		= $result->orderby('accesses.app.version', $value);
 						break;
 					case 'type':
-						$result		= $result->orderby('app.type', $value);
+						$result		= $result->orderby('accesses.app.type', $value);
 						break;
 					case 'company':
-						$result		= $result->orderby('company.name', $value);
+						$result		= $result->orderby('accesses.company.name', $value);
 						break;
 					default:
 						# code...
@@ -121,13 +127,13 @@ class ClientController extends Controller
 	}
 
 	/**
-	 * Store Client
+	 * Store User
 	 *
 	 * @Post("/")
 	 * @Versions({"v1"})
 	 * @Transaction({
-	 *      @Request({"_id":null,"app":{"type":"string","version":"string","name":"string"},"company":{"code":"string","name":"string"},"key":"string","secret":"string","grants":{"name":"string","scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}),
-	 *      @Response(200, body={"status": "success", "data": {"_id":"string","app":{"type":"string","version":"string","name":"string"},"company":{"code":"string","name":"string"},"key":"string","secret":"string","grants":{"name":"string","scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}),
+	 *      @Request({"_id":"null","email":"string","password":"string","user":{"name":"string"},"accesses":{"client_id":"string","app":{"type":"web|mobile","name":"string","version":"string"},"company":{"code":"string","name":"string"},"scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}),
+	 *      @Response(200, body={"status": "success", "data": {"_id":"string","email":"string","user":{"name":"string"},"accesses":{"client_id":"string","app":{"type":"web|mobile","name":"string","version":"string"},"company":{"code":"string","name":"string"},"scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}}),
 	 *      @Response(200, body={"status": {"error": {"code must be unique."}}})
 	 * })
 	 */
@@ -137,15 +143,15 @@ class ClientController extends Controller
 
 		if(!is_null($id) && !empty($id))
 		{
-			$result		= Client::id($id)->first();
+			$result		= User::id($id)->first();
 		}
 		else
 		{
-			$result 	= new Client;
+			$result 	= new User;
 		}
 		
 
-		$result->fill(Input::only('app', 'company', 'key', 'secret', 'grants', 'expire'));
+		$result->fill(Input::only('email', 'password', 'user', 'accesses', 'expire'));
 
 		if($result->save())
 		{
@@ -157,32 +163,32 @@ class ClientController extends Controller
 	}
 
 	/**
-	 * Delete Client
+	 * Delete User
 	 *
 	 * @Delete("/")
 	 * @Versions({"v1"})
 	 * @Transaction({
 	 *      @Request({"id":null}),
-	 *      @Response(200, body={"status": "success", "data": {"_id":null,"app":{"type":"string","version":"string","name":"string"},"company":{"code":"string","name":"string"},"key":"string","secret":"string","grants":{"name":"string","scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}}),
+	 *      @Response(200, body={"status": "success", "data": {"_id":"string","email":"string","user":{"name":"string"},"accesses":{"client_id":"string","app":{"type":"web|mobile","name":"string","version":"string"},"company":{"code":"string","name":"string"},"scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}}),
 	 *      @Response(200, body={"status": {"error": {"code must be unique."}}})
 	 * })
 	 */
 	public function delete()
 	{
-		$client			= Client::id(Input::get('_id'))->first();
+		$user			= User::id(Input::get('_id'))->first();
 
-		$result 		= $client;
+		$result 		= $user;
 
-		if($client && $client->delete())
+		if($user && $user->delete())
 		{
 			return response()->json( JSend::success($result->toArray())->asArray())
 					->setCallback($this->request->input('callback'));
 		}
-		elseif(!$client)
+		elseif(!$user)
 		{
 			return response()->json( JSend::error(['ID tidak valid'])->asArray());
 		}
 
-		return response()->json( JSend::error($client->getError())->asArray());
+		return response()->json( JSend::error($user->getError())->asArray());
 	}
 }
