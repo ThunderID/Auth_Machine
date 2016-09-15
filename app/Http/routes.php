@@ -11,6 +11,21 @@
 |
 */
 
-$app->get('/', function () use ($app) {
-    return $app->version();
-});
+$app->get('/clients',
+	[
+		'uses'				=> 'ClientController@index'
+	]
+);
+
+$app->post('/clients',
+	[
+		'uses'				=> 'ClientController@post'
+	]
+);
+
+$app->delete('/clients',
+	[
+		'uses'				=> 'ClientController@delete'
+	]
+);
+
