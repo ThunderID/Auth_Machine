@@ -132,8 +132,8 @@ class UserController extends Controller
 	 * @Post("/")
 	 * @Versions({"v1"})
 	 * @Transaction({
-	 *      @Request({"_id":"null","email":"string","password":"string","user":{"name":"string"},"accesses":{"client_id":"string","app":{"type":"web|mobile","name":"string","version":"string"},"company":{"code":"string","name":"string"},"scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}),
-	 *      @Response(200, body={"status": "success", "data": {"_id":"string","email":"string","user":{"name":"string"},"accesses":{"client_id":"string","app":{"type":"web|mobile","name":"string","version":"string"},"company":{"code":"string","name":"string"},"scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}}),
+	 *      @Request({"_id":"null","email":"string","password":"string","user":{"name":"string"},"accesses":{"client_id":"string","app":{"type":"web|mobile","name":"string","version":"string"},"company":{"code":"string","name":"string"},"scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}}),
+	 *      @Response(200, body={"status": "success", "data": {"_id":"string","email":"string","user":{"name":"string"},"accesses":{"client_id":"string","app":{"type":"web|mobile","name":"string","version":"string"},"company":{"code":"string","name":"string"},"scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}}}),
 	 *      @Response(200, body={"status": {"error": {"code must be unique."}}})
 	 * })
 	 */
@@ -169,7 +169,7 @@ class UserController extends Controller
 	 * @Versions({"v1"})
 	 * @Transaction({
 	 *      @Request({"id":null}),
-	 *      @Response(200, body={"status": "success", "data": {"_id":"string","email":"string","user":{"name":"string"},"accesses":{"client_id":"string","app":{"type":"web|mobile","name":"string","version":"string"},"company":{"code":"string","name":"string"},"scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}}),
+	 *      @Response(200, body={"status": "success", "data": {"_id":"string","email":"string","user":{"name":"string"},"accesses":{"client_id":"string","app":{"type":"web|mobile","name":"string","version":"string"},"company":{"code":"string","name":"string"},"scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}}}),
 	 *      @Response(200, body={"status": {"error": {"code must be unique."}}})
 	 * })
 	 */

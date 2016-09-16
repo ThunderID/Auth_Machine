@@ -126,8 +126,8 @@ class ClientController extends Controller
 	 * @Post("/")
 	 * @Versions({"v1"})
 	 * @Transaction({
-	 *      @Request({"_id":null,"app":{"type":"string","version":"string","name":"string"},"company":{"code":"string","name":"string"},"key":"string","secret":"string","grants":{"name":"string","scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}),
-	 *      @Response(200, body={"status": "success", "data": {"_id":"string","app":{"type":"string","version":"string","name":"string"},"company":{"code":"string","name":"string"},"key":"string","secret":"string","grants":{"name":"string","scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}),
+	 *      @Request({"_id":null,"app":{"type":"string","version":"string","name":"string"},"company":{"code":"string","name":"string"},"key":"string","secret":"string","grants":{"name":"string","scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}}),
+	 *      @Response(200, body={"status": "success", "data": {"_id":"string","app":{"type":"string","version":"string","name":"string"},"company":{"code":"string","name":"string"},"key":"string","secret":"string","grants":{"name":"string","scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}}}),
 	 *      @Response(200, body={"status": {"error": {"code must be unique."}}})
 	 * })
 	 */
@@ -163,7 +163,7 @@ class ClientController extends Controller
 	 * @Versions({"v1"})
 	 * @Transaction({
 	 *      @Request({"id":null}),
-	 *      @Response(200, body={"status": "success", "data": {"_id":null,"app":{"type":"string","version":"string","name":"string"},"company":{"code":"string","name":"string"},"key":"string","secret":"string","grants":{"name":"string","scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}}),
+	 *      @Response(200, body={"status": "success", "data": {"_id":null,"app":{"type":"string","version":"string","name":"string"},"company":{"code":"string","name":"string"},"key":"string","secret":"string","grants":{"name":"string","scopes":{"string"}},"expire":{"scheduled":{"timezone":"string","hour":"integer"},"timeout":{"minute":"integer"}}}}),
 	 *      @Response(200, body={"status": {"error": {"code must be unique."}}})
 	 * })
 	 */

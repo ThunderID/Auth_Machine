@@ -35,7 +35,7 @@ class AuthController extends Controller
 	 * @Versions({"v1"})
 	 * @Transaction({
 	 *      @Request({"key":"string","secret":"string","grant":"string","email":"string","password":"string"}),
-	 *      @Response(200, body={"status": "success", "data": {"token":{"header":{"alg","type","iss","exp"},"payload":"company","scopes","application","user"},"verify signature"}}),
+	 *      @Response(200, body={"status": "success", "data": {"token":{"header":{"alg","typ"},"payload":{"iss","exp","content":{"company","scopes","application","user"}}},"verify signature"}}),
 	 *      @Response(200, body={"status": {"error": {"password required."}}})
 	 * })
 	 */

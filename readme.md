@@ -1,21 +1,481 @@
-# Lumen PHP Framework
+FORMAT: 1A
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/lumen-framework/v/unstable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+# AUTHMACHINE
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+# Clients [/clients]
+Client resource representation.
 
-## Official Documentation
+## Show all Clients [GET /clients]
 
-Documentation for the framework can be found on the [Lumen website](http://lumen.laravel.com/docs).
 
-## Security Vulnerabilities
++ Request (application/json)
+    + Body
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+            {
+                "search": {
+                    "_id": "string",
+                    "type": "mobile|web",
+                    "version": "string",
+                    "code": "string",
+                    "grant": "string",
+                    "scopes": "string"
+                },
+                "sort": {
+                    "newest": "asc|desc",
+                    "version": "desc|asc",
+                    "type": "desc|asc",
+                    "company": "desc|asc"
+                },
+                "take": "integer",
+                "skip": "integer"
+            }
 
-## License
++ Response 200 (application/json)
+    + Body
 
-The Lumen framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+            {
+                "status": "success",
+                "data": {
+                    "data": {
+                        "_id": "string",
+                        "app": {
+                            "type": "string",
+                            "version": "string",
+                            "name": "string"
+                        },
+                        "company": {
+                            "code": "string",
+                            "name": "string"
+                        },
+                        "key": "string",
+                        "secret": "string",
+                        "grants": {
+                            "name": "string",
+                            "scopes": [
+                                "string"
+                            ]
+                        },
+                        "expire": {
+                            "scheduled": {
+                                "timezone": "string",
+                                "hour": "integer"
+                            },
+                            "timeout": {
+                                "minute": "integer"
+                            }
+                        }
+                    },
+                    "count": "integer"
+                }
+            }
+
+## Store Client [POST /clients]
+
+
++ Request (application/json)
+    + Body
+
+            {
+                "_id": null,
+                "app": {
+                    "type": "string",
+                    "version": "string",
+                    "name": "string"
+                },
+                "company": {
+                    "code": "string",
+                    "name": "string"
+                },
+                "key": "string",
+                "secret": "string",
+                "grants": {
+                    "name": "string",
+                    "scopes": [
+                        "string"
+                    ]
+                },
+                "expire": {
+                    "scheduled": {
+                        "timezone": "string",
+                        "hour": "integer"
+                    },
+                    "timeout": {
+                        "minute": "integer"
+                    }
+                }
+            }
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "status": "success",
+                "data": {
+                    "_id": "string",
+                    "app": {
+                        "type": "string",
+                        "version": "string",
+                        "name": "string"
+                    },
+                    "company": {
+                        "code": "string",
+                        "name": "string"
+                    },
+                    "key": "string",
+                    "secret": "string",
+                    "grants": {
+                        "name": "string",
+                        "scopes": [
+                            "string"
+                        ]
+                    },
+                    "expire": {
+                        "scheduled": {
+                            "timezone": "string",
+                            "hour": "integer"
+                        },
+                        "timeout": {
+                            "minute": "integer"
+                        }
+                    }
+                }
+            }
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "status": {
+                    "error": [
+                        "code must be unique."
+                    ]
+                }
+            }
+
+## Delete Client [DELETE /clients]
+
+
++ Request (application/json)
+    + Body
+
+            {
+                "id": null
+            }
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "status": "success",
+                "data": {
+                    "_id": null,
+                    "app": {
+                        "type": "string",
+                        "version": "string",
+                        "name": "string"
+                    },
+                    "company": {
+                        "code": "string",
+                        "name": "string"
+                    },
+                    "key": "string",
+                    "secret": "string",
+                    "grants": {
+                        "name": "string",
+                        "scopes": [
+                            "string"
+                        ]
+                    },
+                    "expire": {
+                        "scheduled": {
+                            "timezone": "string",
+                            "hour": "integer"
+                        },
+                        "timeout": {
+                            "minute": "integer"
+                        }
+                    }
+                }
+            }
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "status": {
+                    "error": [
+                        "code must be unique."
+                    ]
+                }
+            }
+
+# Users [/users]
+User resource representation.
+
+## Show all Users [GET /users]
+
+
++ Request (application/json)
+    + Body
+
+            {
+                "search": {
+                    "_id": "string",
+                    "type": "mobile|web",
+                    "version": "string",
+                    "code": "string",
+                    "client": "string",
+                    "scopes": "string"
+                },
+                "sort": {
+                    "newest": "asc|desc",
+                    "version": "desc|asc",
+                    "type": "desc|asc",
+                    "company": "desc|asc",
+                    "name": "desc|asc"
+                },
+                "take": "integer",
+                "skip": "integer"
+            }
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "status": "success",
+                "data": {
+                    "data": {
+                        "_id": "string",
+                        "email": "string",
+                        "user": {
+                            "name": "string"
+                        },
+                        "accesses": {
+                            "client_id": "string",
+                            "app": {
+                                "type": "web|mobile",
+                                "name": "string",
+                                "version": "string"
+                            },
+                            "company": {
+                                "code": "string",
+                                "name": "string"
+                            },
+                            "scopes": [
+                                "string"
+                            ]
+                        },
+                        "expire": {
+                            "scheduled": {
+                                "timezone": "string",
+                                "hour": "integer"
+                            },
+                            "timeout": {
+                                "minute": "integer"
+                            }
+                        }
+                    },
+                    "count": "integer"
+                }
+            }
+
+## Store User [POST /users]
+
+
++ Request (application/json)
+    + Body
+
+            {
+                "_id": "null",
+                "email": "string",
+                "password": "string",
+                "user": {
+                    "name": "string"
+                },
+                "accesses": {
+                    "client_id": "string",
+                    "app": {
+                        "type": "web|mobile",
+                        "name": "string",
+                        "version": "string"
+                    },
+                    "company": {
+                        "code": "string",
+                        "name": "string"
+                    },
+                    "scopes": [
+                        "string"
+                    ]
+                },
+                "expire": {
+                    "scheduled": {
+                        "timezone": "string",
+                        "hour": "integer"
+                    },
+                    "timeout": {
+                        "minute": "integer"
+                    }
+                }
+            }
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "status": "success",
+                "data": {
+                    "_id": "string",
+                    "email": "string",
+                    "user": {
+                        "name": "string"
+                    },
+                    "accesses": {
+                        "client_id": "string",
+                        "app": {
+                            "type": "web|mobile",
+                            "name": "string",
+                            "version": "string"
+                        },
+                        "company": {
+                            "code": "string",
+                            "name": "string"
+                        },
+                        "scopes": [
+                            "string"
+                        ]
+                    },
+                    "expire": {
+                        "scheduled": {
+                            "timezone": "string",
+                            "hour": "integer"
+                        },
+                        "timeout": {
+                            "minute": "integer"
+                        }
+                    }
+                }
+            }
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "status": {
+                    "error": [
+                        "code must be unique."
+                    ]
+                }
+            }
+
+## Delete User [DELETE /users]
+
+
++ Request (application/json)
+    + Body
+
+            {
+                "id": null
+            }
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "status": "success",
+                "data": {
+                    "_id": "string",
+                    "email": "string",
+                    "user": {
+                        "name": "string"
+                    },
+                    "accesses": {
+                        "client_id": "string",
+                        "app": {
+                            "type": "web|mobile",
+                            "name": "string",
+                            "version": "string"
+                        },
+                        "company": {
+                            "code": "string",
+                            "name": "string"
+                        },
+                        "scopes": [
+                            "string"
+                        ]
+                    },
+                    "expire": {
+                        "scheduled": {
+                            "timezone": "string",
+                            "hour": "integer"
+                        },
+                        "timeout": {
+                            "minute": "integer"
+                        }
+                    }
+                }
+            }
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "status": {
+                    "error": [
+                        "code must be unique."
+                    ]
+                }
+            }
+
+# Tokens [/tokens]
+Auth resource representation.
+
+## Generate token [POST /tokens/generate]
+
+
++ Request (application/json)
+    + Body
+
+            {
+                "key": "string",
+                "secret": "string",
+                "grant": "string",
+                "email": "string",
+                "password": "string"
+            }
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "status": "success",
+                "data": {
+                    "token": {
+                        "header": [
+                            "alg",
+                            "typ"
+                        ],
+                        "payload": {
+                            "0": "iss",
+                            "1": "exp",
+                            "content": [
+                                "company",
+                                "scopes",
+                                "application",
+                                "user"
+                            ]
+                        }
+                    },
+                    "0": "verify signature"
+                }
+            }
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "status": {
+                    "error": [
+                        "password required."
+                    ]
+                }
+            }
