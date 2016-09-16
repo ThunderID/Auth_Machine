@@ -463,7 +463,8 @@ Auth resource representation.
                                 "company",
                                 "scopes",
                                 "application",
-                                "user"
+                                "user",
+                                "client_id"
                             ]
                         }
                     },
