@@ -453,7 +453,9 @@ Auth resource representation.
                         "header": [
                             "alg",
                             "typ"
-                        ],
+                        ]
+                    },
+                    "0": {
                         "payload": {
                             "0": "iss",
                             "1": "exp",
@@ -465,7 +467,7 @@ Auth resource representation.
                             ]
                         }
                     },
-                    "0": "verify signature"
+                    "1": "verify signature"
                 }
             }
 
