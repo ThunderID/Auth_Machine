@@ -94,6 +94,24 @@ class User extends BaseModel
 		User::observe(new UserObserver);
     }
 
+	/**
+	 * jwt identifier
+	 *
+	 */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+	/**
+	 * jwt custome claims
+	 *
+	 */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
 	/* ---------------------------------------------------------------------------- SCOPES ----------------------------------------------------------------------------*/
 
 	/**

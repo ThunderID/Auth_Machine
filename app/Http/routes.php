@@ -13,36 +13,48 @@
 
 $app->get('/clients',
 	[
-		'uses'				=> 'ClientController@index'
+		'uses'				=> 'ClientController@index',
+		'middleware'		=> 'jwt|company:read-client',
 	]
 );
 
 $app->post('/clients',
 	[
-		'uses'				=> 'ClientController@post'
+		'uses'				=> 'ClientController@post',
+		'middleware'		=> 'jwt|company:store-client',
 	]
 );
 
 $app->delete('/clients',
 	[
-		'uses'				=> 'ClientController@delete'
+		'uses'				=> 'ClientController@delete',
+		'middleware'		=> 'jwt|company:delete-client',
 	]
 );
 
 $app->get('/users',
 	[
-		'uses'				=> 'UserController@index'
+		'uses'				=> 'UserController@index',
+		'middleware'		=> 'jwt|company:read-user',
 	]
 );
 
 $app->post('/users',
 	[
-		'uses'				=> 'UserController@post'
+		'uses'				=> 'UserController@post',
+		'middleware'		=> 'jwt|company:store-user',
 	]
 );
 
 $app->delete('/users',
 	[
-		'uses'				=> 'UserController@delete'
+		'uses'				=> 'UserController@delete',
+		'middleware'		=> 'jwt|company:delete-user',
+	]
+);
+
+$app->post('/tokens/generate',
+	[
+		'uses'				=> 'AuthController@generate'
 	]
 );

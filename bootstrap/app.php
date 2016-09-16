@@ -23,7 +23,8 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
-$app->register('Jenssegers\Mongodb\MongodbServiceProvider');
+$app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
+$app->register(GenTux\Jwt\Support\LumenServiceProvider::class);
 
 $app->withFacades();
 
@@ -65,9 +66,10 @@ $app->singleton(
 //    App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+    // 'auth' => App\Http\Middleware\Authenticate::class,
+    'company'		=> \App\Http\Middleware\CompanyMiddleware::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
